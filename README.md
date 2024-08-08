@@ -1,6 +1,6 @@
 # Range
 
-1. Exceptions/Iterator
+1. Enums
 
 ## HWs/CWs
 
