@@ -14,8 +14,6 @@ import io.p4r53c.telran.time.enums.TimeUnit;
 
 class TimePointTest {
 
-    private static final float DELTA = 0.1f;
-
     // --- Adjusters ---
 
     @Test
@@ -62,22 +60,23 @@ class TimePointTest {
         assertTrue(t2.compareTo(t1) > 0);
     }
 
-    @Test
-    void testCompareToDifferentTimeUnits() {
-        TimePoint t1 = new TimePoint(1f, TimeUnit.MICROSECOND);
-        TimePoint t2 = new TimePoint(1_000f, TimeUnit.NANOSECOND);
-
-        assertEquals(0, t1.compareTo(t2));
-    }
-
     // --- convert ---
+
+    @Test
+    void testConvertFromMillisecondsToSeconds() {
+        TimePoint timePoint = new TimePoint(2_000f, TimeUnit.MILLISECOND);
+        TimePoint convertedTimePoint = timePoint.convert(TimeUnit.SECOND);
+
+        assertEquals(2f, convertedTimePoint.getAmount());
+        assertEquals(TimeUnit.SECOND, convertedTimePoint.getTimeUnit());
+    }
 
     @Test
     void testConvertFromSecondsToMinutes() {
         TimePoint timePoint = new TimePoint(60f, TimeUnit.SECOND);
         TimePoint convertedTimePoint = timePoint.convert(TimeUnit.MINUTE);
 
-        assertEquals(1f, convertedTimePoint.getAmount(), DELTA);
+        assertEquals(1f, convertedTimePoint.getAmount());
         assertEquals(TimeUnit.MINUTE, convertedTimePoint.getTimeUnit());
     }
 
@@ -100,12 +99,12 @@ class TimePointTest {
     }
 
     @Test
-    void testConvertFromNanosToMilliseconds() {
-        TimePoint timePoint = new TimePoint(1_000_000f, TimeUnit.NANOSECOND);
-        TimePoint convertedTimePoint = timePoint.convert(TimeUnit.MILLISECOND);
+    void testConvertFromMillisecondsToHours() {
+        TimePoint timePoint = new TimePoint(2f * TimeUnit.HOUR.getMillis(), TimeUnit.MILLISECOND);
+        TimePoint convertedTimePoint = timePoint.convert(TimeUnit.HOUR);
 
-        assertEquals(1f, convertedTimePoint.getAmount());
-        assertEquals(TimeUnit.MILLISECOND, convertedTimePoint.getTimeUnit());
+        assertEquals(2f, convertedTimePoint.getAmount());
+        assertEquals(TimeUnit.HOUR, convertedTimePoint.getTimeUnit());
     }
 
     // --- between ---
@@ -115,15 +114,8 @@ class TimePointTest {
         TimePoint t1 = new TimePoint(1f, TimeUnit.HOUR);
         TimePoint t2 = new TimePoint(61f, TimeUnit.MINUTE);
 
-        TimePoint t3 = new TimePoint(1f, TimeUnit.MICROSECOND);
-        TimePoint t4 = new TimePoint(1.001f, TimeUnit.MILLISECOND);
-
-        assertEquals(60f, TimeUnit.SECOND.between(t1, t2), DELTA);
-        assertEquals(1f, TimeUnit.MINUTE.between(t1, t2), DELTA);
-        assertEquals(1f / 60f, TimeUnit.HOUR.between(t1, t2), DELTA);
-
-        assertEquals(1000000f, TimeUnit.NANOSECOND.between(t3, t4), DELTA);
-        assertEquals(1000f, TimeUnit.MICROSECOND.between(t3, t4), DELTA);
+        assertEquals(60f, TimeUnit.SECOND.between(t1, t2));
+        assertEquals(1f, TimeUnit.MINUTE.between(t1, t2));
+        assertEquals(1f / 60f, TimeUnit.HOUR.between(t1, t2));
     }
-
 }

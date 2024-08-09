@@ -12,10 +12,8 @@ import io.p4r53c.telran.time.enums.TimeUnit;
 class FutureProximityAdjusterTest {
 
     private TimePoint[] timePoints = {
-            new TimePoint(1f, TimeUnit.NANOSECOND),
-            new TimePoint(1_000f, TimeUnit.NANOSECOND),
-            new TimePoint(1_000f, TimeUnit.MICROSECOND),
-            new TimePoint(1_000f, TimeUnit.MILLISECOND),
+            new TimePoint(800f, TimeUnit.MILLISECOND),
+            new TimePoint(900f, TimeUnit.MILLISECOND),
             new TimePoint(1f, TimeUnit.SECOND),
             new TimePoint(30f, TimeUnit.SECOND),
             new TimePoint(10f, TimeUnit.MINUTE),
@@ -37,16 +35,21 @@ class FutureProximityAdjusterTest {
     }
 
     @Test
-    void testAdjustWithNanosTimePoint() {
-        TimePoint result = futureProximityAdjuster.adjust(new TimePoint(769f, TimeUnit.NANOSECOND));
-        assertEquals(1_000f, result.getAmount());
+    void testNotAdjustWithTimePoint() {
+        TimePoint result = futureProximityAdjuster.adjust(new TimePoint(72f, TimeUnit.HOUR));
+        assertNull(result);
     }
 
     @Test
-    void testAdjustWithMicrosToSecondsTimePoint() {
-        TimePoint result = futureProximityAdjuster.adjust(new TimePoint(20_000_000f, TimeUnit.MICROSECOND)); // 20 Sec
+    void testAdjustWithMillisecondsToSecondsTimePoint() {
+        TimePoint result = futureProximityAdjuster.adjust(new TimePoint(950f, TimeUnit.MILLISECOND));
+        assertEquals(result, new TimePoint(1f, TimeUnit.SECOND));
+    }
 
-        assertEquals(result, new TimePoint(30f, TimeUnit.SECOND));
+    @Test
+    void testAdjustWithMillisecondsTimePoint() {
+        TimePoint result = futureProximityAdjuster.adjust(new TimePoint(800f, TimeUnit.MILLISECOND));
+        assertEquals(900f, result.getAmount());
     }
 
     @Test
