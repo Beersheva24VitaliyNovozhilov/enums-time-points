@@ -118,9 +118,10 @@ class TimePointTest {
         TimePoint t3 = new TimePoint(1f, TimeUnit.MICROSECOND);
         TimePoint t4 = new TimePoint(1f, TimeUnit.MILLISECOND);
 
-        assertEquals(60f, TimeUnit.SECOND.between(t1, t2));
-        assertEquals(1f, TimeUnit.MINUTE.between(t1, t2));
+        assertEquals(60f, TimeUnit.SECOND.between(t1, t2), DELTA);
+        assertEquals(1f, TimeUnit.MINUTE.between(t1, t2), DELTA);
         assertEquals(1f / 60f, TimeUnit.HOUR.between(t1, t2), DELTA);
+        
         assertEquals(999000f, TimeUnit.NANOSECOND.between(t3, t4));
         assertEquals(999f, TimeUnit.MICROSECOND.between(t3, t4));
     }
