@@ -14,7 +14,9 @@ import io.p4r53c.telran.time.enums.TimeUnit;
 
 class TimePointTest {
 
-    // --- Ajusters ---
+    private static final float DELTA = 0.1f;
+
+    // --- Adjusters ---
 
     @Test
     void testWithValidPlusAdjuster() {
@@ -23,7 +25,7 @@ class TimePointTest {
         TimePoint result = timePoint.with(adjuster);
 
         assertNotNull(result);
-        assertEquals(15f, result.getAmount(), 0.01f);
+        assertEquals(15f, result.getAmount());
         assertEquals(TimeUnit.HOUR, result.getTimeUnit());
     }
 
@@ -75,7 +77,7 @@ class TimePointTest {
         TimePoint timePoint = new TimePoint(60f, TimeUnit.SECOND);
         TimePoint convertedTimePoint = timePoint.convert(TimeUnit.MINUTE);
 
-        assertEquals(0.99999994f, convertedTimePoint.getAmount());
+        assertEquals(1f, convertedTimePoint.getAmount(), DELTA);
         assertEquals(TimeUnit.MINUTE, convertedTimePoint.getTimeUnit());
     }
 
@@ -97,6 +99,15 @@ class TimePointTest {
         assertEquals(TimeUnit.HOUR, convertedTimePoint.getTimeUnit());
     }
 
+    @Test
+    void testConvertFromNanosToMilliseconds() {
+        TimePoint timePoint = new TimePoint(1_000_000f, TimeUnit.NANOSECOND);
+        TimePoint convertedTimePoint = timePoint.convert(TimeUnit.MILLISECOND);
+
+        assertEquals(1f, convertedTimePoint.getAmount());
+        assertEquals(TimeUnit.MILLISECOND, convertedTimePoint.getTimeUnit());
+    }
+
     // --- between ---
 
     @Test
@@ -109,7 +120,7 @@ class TimePointTest {
 
         assertEquals(60f, TimeUnit.SECOND.between(t1, t2));
         assertEquals(1f, TimeUnit.MINUTE.between(t1, t2));
-        assertEquals(1f / 60f, TimeUnit.HOUR.between(t1, t2), 0.1f);
+        assertEquals(1f / 60f, TimeUnit.HOUR.between(t1, t2), DELTA);
         assertEquals(999000f, TimeUnit.NANOSECOND.between(t3, t4));
         assertEquals(999f, TimeUnit.MICROSECOND.between(t3, t4));
     }
