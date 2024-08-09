@@ -14,13 +14,21 @@ class FutureProximityAdjusterTest {
     private TimePoint[] timePoints = {
             new TimePoint(800f, TimeUnit.MILLISECOND),
             new TimePoint(900f, TimeUnit.MILLISECOND),
+            
             new TimePoint(1f, TimeUnit.SECOND),
             new TimePoint(30f, TimeUnit.SECOND),
+            new TimePoint(30f, TimeUnit.SECOND),
+
+            new TimePoint(10f, TimeUnit.MINUTE),
             new TimePoint(10f, TimeUnit.MINUTE),
             new TimePoint(20f, TimeUnit.MINUTE),
             new TimePoint(30f, TimeUnit.MINUTE),
+            
             new TimePoint(1f, TimeUnit.HOUR),
-            new TimePoint(48f, TimeUnit.HOUR)
+            new TimePoint(48f, TimeUnit.HOUR),
+            new TimePoint(48f, TimeUnit.HOUR),
+
+            new TimePoint(900f, TimeUnit.MILLISECOND)
     };
 
     TimePoint[] emptyTimePointArray = new TimePoint[0];
