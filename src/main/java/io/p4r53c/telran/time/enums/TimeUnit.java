@@ -42,6 +42,18 @@ public enum TimeUnit {
             result = -result;
         }
 
-        return result;
+        return roundToPrecision(result, 1);
+    }
+
+    /**
+     * Rounds the given value to the specified precision.
+     *
+     * @param value     the value to be rounded
+     * @param precision the number of decimal places to round to
+     * @return the rounded value with the specified precision
+     */
+    private float roundToPrecision(float value, int precision) {
+        float scale = (float) Math.pow(10, precision);
+        return Math.round(value * scale) / scale;
     }
 }

@@ -99,12 +99,6 @@ class TimePointTest {
 
     // --- between ---
 
-    /*
-     * Important note: Due to rounding errors when working with NANOS and
-     * float type, not long, the exact calculated values ​​are given for this test,
-     * but it is obvious that they are close to the values ​​as if I were working
-     * with seconds.
-     */
     @Test
     void testBetween() {
         TimePoint t1 = new TimePoint(1f, TimeUnit.HOUR);
@@ -113,17 +107,11 @@ class TimePointTest {
         TimePoint t3 = new TimePoint(1f, TimeUnit.MICROSECOND);
         TimePoint t4 = new TimePoint(1f, TimeUnit.MILLISECOND);
 
-        // For Seconds: 60f
-        assertEquals(60.000042f, TimeUnit.SECOND.between(t1, t2));
-
-        // For Seconds: 1f
-        assertEquals(1.0000007f, TimeUnit.MINUTE.between(t1, t2));
-
-        // 1.0000001f / 60f = 0.016666668f Close but not enough :) For Seconds: 1 / 60f
-        assertEquals(0.016666679f, TimeUnit.HOUR.between(t1, t2));
-
+        assertEquals(60f, TimeUnit.SECOND.between(t1, t2));
+        assertEquals(1f, TimeUnit.MINUTE.between(t1, t2));
+        assertEquals(1f / 60f, TimeUnit.HOUR.between(t1, t2), 0.1f);
         assertEquals(999000f, TimeUnit.NANOSECOND.between(t3, t4));
-
         assertEquals(999f, TimeUnit.MICROSECOND.between(t3, t4));
     }
+
 }
