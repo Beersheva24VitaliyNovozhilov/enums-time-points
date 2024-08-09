@@ -4,7 +4,7 @@
 
 ## HWs/CWs
 
-* CW 15 - Enums
+* CW/HW 15 - Enums
 
 ## Contributing
 
