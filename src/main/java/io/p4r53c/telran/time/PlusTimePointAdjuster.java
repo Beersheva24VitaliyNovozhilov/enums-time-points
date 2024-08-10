@@ -8,7 +8,7 @@ import io.p4r53c.telran.time.enums.TimeUnit;
  *
  * @author p4r53c
  */
-public class PlusTimePointAdjuster implements ITimePointAdjuster {
+public class PlusTimePointAdjuster implements TimePointAdjuster {
 
     private int amount;
     private TimeUnit timeUnit;

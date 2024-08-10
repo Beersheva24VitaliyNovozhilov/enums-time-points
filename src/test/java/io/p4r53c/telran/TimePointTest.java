@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import io.p4r53c.telran.time.PlusTimePointAdjuster;
 import io.p4r53c.telran.time.TimePoint;
-import io.p4r53c.telran.time.ITimePointAdjuster;
+import io.p4r53c.telran.time.TimePointAdjuster;
 import io.p4r53c.telran.time.enums.TimeUnit;
 
 class TimePointTest {
@@ -30,7 +30,7 @@ class TimePointTest {
     @Test
     void testWithAdjusterThatReturnsNull() {
         TimePoint timePoint = new TimePoint(10f, TimeUnit.HOUR);
-        ITimePointAdjuster adjuster = new ITimePointAdjuster() {
+        TimePointAdjuster adjuster = new TimePointAdjuster() {
             @Override
             public TimePoint adjust(TimePoint timePoint) {
                 return null;
@@ -63,15 +63,6 @@ class TimePointTest {
     // --- convert ---
 
     @Test
-    void testConvertFromMillisecondsToSeconds() {
-        TimePoint timePoint = new TimePoint(2_000f, TimeUnit.MILLISECOND);
-        TimePoint convertedTimePoint = timePoint.convert(TimeUnit.SECOND);
-
-        assertEquals(2f, convertedTimePoint.getAmount());
-        assertEquals(TimeUnit.SECOND, convertedTimePoint.getTimeUnit());
-    }
-
-    @Test
     void testConvertFromSecondsToMinutes() {
         TimePoint timePoint = new TimePoint(60f, TimeUnit.SECOND);
         TimePoint convertedTimePoint = timePoint.convert(TimeUnit.MINUTE);
@@ -98,15 +89,6 @@ class TimePointTest {
         assertEquals(TimeUnit.HOUR, convertedTimePoint.getTimeUnit());
     }
 
-    @Test
-    void testConvertFromMillisecondsToHours() {
-        TimePoint timePoint = new TimePoint(2f * TimeUnit.HOUR.getMillis(), TimeUnit.MILLISECOND);
-        TimePoint convertedTimePoint = timePoint.convert(TimeUnit.HOUR);
-
-        assertEquals(2f, convertedTimePoint.getAmount());
-        assertEquals(TimeUnit.HOUR, convertedTimePoint.getTimeUnit());
-    }
-
     // --- between ---
 
     @Test
@@ -114,8 +96,14 @@ class TimePointTest {
         TimePoint t1 = new TimePoint(1f, TimeUnit.HOUR);
         TimePoint t2 = new TimePoint(61f, TimeUnit.MINUTE);
 
+        TimePoint t3 = new TimePoint(1f, TimeUnit.MINUTE);
+        TimePoint t4 = new TimePoint(10f, TimeUnit.SECOND);
+
         assertEquals(60f, TimeUnit.SECOND.between(t1, t2));
         assertEquals(1f, TimeUnit.MINUTE.between(t1, t2));
         assertEquals(1f / 60f, TimeUnit.HOUR.between(t1, t2));
+
+        assertEquals(-50f, TimeUnit.SECOND.between(t3, t4));
+
     }
 }

@@ -5,7 +5,7 @@ package io.p4r53c.telran.time;
  *
  * @see TimePoint
  */
-public interface ITimePointAdjuster {
+public interface TimePointAdjuster {
 
     TimePoint adjust(TimePoint timePoint);
 }

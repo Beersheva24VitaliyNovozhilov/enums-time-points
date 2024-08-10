@@ -12,9 +12,6 @@ import io.p4r53c.telran.time.enums.TimeUnit;
 class FutureProximityAdjusterTest {
 
     private TimePoint[] timePoints = {
-            new TimePoint(800f, TimeUnit.MILLISECOND),
-            new TimePoint(900f, TimeUnit.MILLISECOND),
-            
             new TimePoint(1f, TimeUnit.SECOND),
             new TimePoint(30f, TimeUnit.SECOND),
             new TimePoint(30f, TimeUnit.SECOND),
@@ -27,8 +24,6 @@ class FutureProximityAdjusterTest {
             new TimePoint(1f, TimeUnit.HOUR),
             new TimePoint(48f, TimeUnit.HOUR),
             new TimePoint(48f, TimeUnit.HOUR),
-
-            new TimePoint(900f, TimeUnit.MILLISECOND)
     };
 
     TimePoint[] emptyTimePointArray = new TimePoint[0];
@@ -46,18 +41,6 @@ class FutureProximityAdjusterTest {
     void testNotAdjustWithTimePoint() {
         TimePoint result = futureProximityAdjuster.adjust(new TimePoint(72f, TimeUnit.HOUR));
         assertNull(result);
-    }
-
-    @Test
-    void testAdjustWithMillisecondsToSecondsTimePoint() {
-        TimePoint result = futureProximityAdjuster.adjust(new TimePoint(950f, TimeUnit.MILLISECOND));
-        assertEquals(result, new TimePoint(1f, TimeUnit.SECOND));
-    }
-
-    @Test
-    void testAdjustWithMillisecondsTimePoint() {
-        TimePoint result = futureProximityAdjuster.adjust(new TimePoint(800f, TimeUnit.MILLISECOND));
-        assertEquals(900f, result.getAmount());
     }
 
     @Test

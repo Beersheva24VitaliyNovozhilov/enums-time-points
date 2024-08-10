@@ -7,7 +7,7 @@ import java.util.Arrays;
  * 
  * @author p4r53c
  */
-public class FutureProximityAdjuster implements ITimePointAdjuster {
+public class FutureProximityAdjuster implements TimePointAdjuster {
 
     TimePoint[] timePoints;
 

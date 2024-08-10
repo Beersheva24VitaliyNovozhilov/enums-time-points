@@ -49,8 +49,8 @@ public class TimePoint implements Comparable<TimePoint> {
      */
     @Override
     public int compareTo(TimePoint timePoint) {
-        float thisTime = this.amount * this.timeUnit.getMillis();
-        float otherTime = timePoint.amount * timePoint.timeUnit.getMillis();
+        float thisTime = this.amount * this.timeUnit.getValueOfSeconds();
+        float otherTime = timePoint.amount * timePoint.timeUnit.getValueOfSeconds();
 
         return Float.compare(thisTime, otherTime);
     }
@@ -64,7 +64,7 @@ public class TimePoint implements Comparable<TimePoint> {
      */
     public TimePoint convert(TimeUnit timeUnit) {
         float amountInTargetUnit = this.amount
-                * (this.timeUnit.getMillis() / timeUnit.getMillis());
+                * (this.timeUnit.getValueOfSeconds() / timeUnit.getValueOfSeconds());
         return new TimePoint(amountInTargetUnit, timeUnit);
     }
 
@@ -74,10 +74,10 @@ public class TimePoint implements Comparable<TimePoint> {
      * @param adjuster The TimePoint adjuster to use.
      * @return A new TimePoint that is adjusted by the specified TimePoint adjuster.
      */
-    public TimePoint with(ITimePointAdjuster adjuster) {
+    public TimePoint with(TimePointAdjuster adjuster) {
         return adjuster.adjust(this);
     }
-    
+
     @Override
     public boolean equals(Object o) {
         boolean isEqual = false;
